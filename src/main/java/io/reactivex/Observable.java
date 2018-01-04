@@ -1890,7 +1890,7 @@ public abstract class Observable<T> implements ObservableSource<T> {
      */
     @CheckReturnValue
     @SchedulerSupport(SchedulerSupport.NONE)
-    public static <T> Observable<T> fromIterable(Iterable<? extends T> source) {
+    public static <T> Observable<T> fromIterable(@NonNull Iterable<? extends T> source) {
         ObjectHelper.requireNonNull(source, "source is null");
         return RxJavaPlugins.onAssembly(new ObservableFromIterable<T>(source));
     }
