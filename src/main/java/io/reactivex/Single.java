@@ -328,9 +328,7 @@ public abstract class Single<T> implements SingleSource<T> {
     @SuppressWarnings({"unchecked", "rawtypes"})
     public static <T> Flowable<T> concatArray(
             @NonNull SingleSource<? extends T>... sources) {
-        return RxJavaPlugins.onAssembly(new FlowableConcatMap(Flowable
-                .fromArray(sources), SingleInternalHelper.toFlowable(), 2,
-                ErrorMode.BOUNDARY));
+        return RxJavaPlugins.onAssembly(new FlowableConcatMap(Flowable.fromArray(sources), SingleInternalHelper.toFlowable(), 2, ErrorMode.BOUNDARY));
     }
 
     /**
@@ -751,9 +749,7 @@ public abstract class Single<T> implements SingleSource<T> {
     public static <T> Single<T> merge(
             @NonNull SingleSource<? extends SingleSource<? extends T>> source) {
         ObjectHelper.requireNonNull(source, "source is null");
-        return RxJavaPlugins
-                .onAssembly(new SingleFlatMap<SingleSource<? extends T>, T>(
-                        source, (Function) Functions.identity()));
+        return RxJavaPlugins.onAssembly(new SingleFlatMap<SingleSource<? extends T>, T>(source, (Function) Functions.identity()));
     }
 
     /**
@@ -925,8 +921,7 @@ public abstract class Single<T> implements SingleSource<T> {
                                      @NonNull final TimeUnit unit, @NonNull final Scheduler scheduler) {
         ObjectHelper.requireNonNull(unit, "unit is null");
         ObjectHelper.requireNonNull(scheduler, "scheduler is null");
-        return RxJavaPlugins
-                .onAssembly(new SingleTimer(delay, unit, scheduler));
+        return RxJavaPlugins.onAssembly(new SingleTimer(delay, unit, scheduler));
     }
 
     /**
@@ -1057,7 +1052,7 @@ public abstract class Single<T> implements SingleSource<T> {
     public static <T> Single<T> wrap(@NonNull SingleSource<T> source) {
         ObjectHelper.requireNonNull(source, "source is null");
         if (source instanceof Single) {
-            return RxJavaPlugins.onAssembly((Single<T>) source);
+            return RxJavaPlugins.onAssembly((Single<T>)source);
         }
         return RxJavaPlugins.onAssembly(new SingleFromUnsafeSource<T>(source));
     }
@@ -1095,8 +1090,7 @@ public abstract class Single<T> implements SingleSource<T> {
             @NonNull Function<? super Object[], ? extends R> zipper) {
         ObjectHelper.requireNonNull(zipper, "zipper is null");
         ObjectHelper.requireNonNull(sources, "sources is null");
-        return RxJavaPlugins.onAssembly(new SingleZipIterable<T, R>(sources,
-                zipper));
+        return RxJavaPlugins.onAssembly(new SingleZipIterable<T, R>(sources, zipper));
     }
 
     /**
@@ -1854,8 +1848,7 @@ public abstract class Single<T> implements SingleSource<T> {
      */
     @CheckReturnValue
     @SchedulerSupport(SchedulerSupport.NONE)
-    public final <U> Single<T> delaySubscription(
-            @NonNull ObservableSource<U> other) {
+    public final <U> Single<T> delaySubscription(@NonNull ObservableSource<U> other) {
         ObjectHelper.requireNonNull(other, "other is null");
         return RxJavaPlugins.onAssembly(new SingleDelayWithObservable<T, U>(this, other));
     }
@@ -1920,8 +1913,7 @@ public abstract class Single<T> implements SingleSource<T> {
      */
     @CheckReturnValue
     @SchedulerSupport(SchedulerSupport.CUSTOM)
-    public final Single<T> delaySubscription(long time, @NonNull TimeUnit unit,
-                                             @NonNull Scheduler scheduler) {
+    public final Single<T> delaySubscription(long time, @NonNull TimeUnit unit, @NonNull Scheduler scheduler) {
         return delaySubscription(Observable.timer(time, unit, scheduler));
     }
 
@@ -1940,11 +1932,9 @@ public abstract class Single<T> implements SingleSource<T> {
      */
     @CheckReturnValue
     @SchedulerSupport(SchedulerSupport.NONE)
-    public final Single<T> doAfterSuccess(
-            @NonNull Consumer<? super T> onAfterSuccess) {
+    public final Single<T> doAfterSuccess(@NonNull Consumer<? super T> onAfterSuccess) {
         ObjectHelper.requireNonNull(onAfterSuccess, "doAfterSuccess is null");
-        return RxJavaPlugins.onAssembly(new SingleDoAfterSuccess<T>(this,
-                onAfterSuccess));
+        return RxJavaPlugins.onAssembly(new SingleDoAfterSuccess<T>(this, onAfterSuccess));
     }
 
     /**
@@ -1969,8 +1959,7 @@ public abstract class Single<T> implements SingleSource<T> {
     @CheckReturnValue
     @SchedulerSupport(SchedulerSupport.NONE)
     public final Single<T> doAfterTerminate(@NonNull Action onAfterTerminate) {
-        ObjectHelper.requireNonNull(onAfterTerminate,
-                "onAfterTerminate is null");
+        ObjectHelper.requireNonNull(onAfterTerminate, "onAfterTerminate is null");
         return RxJavaPlugins.onAssembly(new SingleDoAfterTerminate<T>(this, onAfterTerminate));
     }
 
@@ -2010,8 +1999,7 @@ public abstract class Single<T> implements SingleSource<T> {
      */
     @CheckReturnValue
     @SchedulerSupport(SchedulerSupport.NONE)
-    public final Single<T> doOnSubscribe(
-            @NonNull final Consumer<? super Disposable> onSubscribe) {
+    public final Single<T> doOnSubscribe(@NonNull final Consumer<? super Disposable> onSubscribe) {
         ObjectHelper.requireNonNull(onSubscribe, "onSubscribe is null");
         return RxJavaPlugins.onAssembly(new SingleDoOnSubscribe<T>(this, onSubscribe));
     }
@@ -2029,8 +2017,7 @@ public abstract class Single<T> implements SingleSource<T> {
      */
     @CheckReturnValue
     @SchedulerSupport(SchedulerSupport.NONE)
-    public final Single<T> doOnSuccess(
-            @NonNull final Consumer<? super T> onSuccess) {
+    public final Single<T> doOnSuccess(@NonNull final Consumer<? super T> onSuccess) {
         ObjectHelper.requireNonNull(onSuccess, "onSuccess is null");
         return RxJavaPlugins.onAssembly(new SingleDoOnSuccess<T>(this, onSuccess));
     }
@@ -2048,8 +2035,7 @@ public abstract class Single<T> implements SingleSource<T> {
      */
     @CheckReturnValue
     @SchedulerSupport(SchedulerSupport.NONE)
-    public final Single<T> doOnEvent(
-            @NonNull final BiConsumer<? super T, ? super Throwable> onEvent) {
+    public final Single<T> doOnEvent(@NonNull final BiConsumer<? super T, ? super Throwable> onEvent) {
         ObjectHelper.requireNonNull(onEvent, "onEvent is null");
         return RxJavaPlugins.onAssembly(new SingleDoOnEvent<T>(this, onEvent));
     }
@@ -2067,8 +2053,7 @@ public abstract class Single<T> implements SingleSource<T> {
      */
     @CheckReturnValue
     @SchedulerSupport(SchedulerSupport.NONE)
-    public final Single<T> doOnError(
-            @NonNull final Consumer<? super Throwable> onError) {
+    public final Single<T> doOnError(@NonNull final Consumer<? super Throwable> onError) {
         ObjectHelper.requireNonNull(onError, "onError is null");
         return RxJavaPlugins.onAssembly(new SingleDoOnError<T>(this, onError));
     }
@@ -2134,8 +2119,7 @@ public abstract class Single<T> implements SingleSource<T> {
      */
     @CheckReturnValue
     @SchedulerSupport(SchedulerSupport.NONE)
-    public final <R> Single<R> flatMap(
-            @NonNull Function<? super T, ? extends SingleSource<? extends R>> mapper) {
+    public final <R> Single<R> flatMap(@NonNull Function<? super T, ? extends SingleSource<? extends R>> mapper) {
         ObjectHelper.requireNonNull(mapper, "mapper is null");
         return RxJavaPlugins.onAssembly(new SingleFlatMap<T, R>(this, mapper));
     }
@@ -2158,8 +2142,7 @@ public abstract class Single<T> implements SingleSource<T> {
      */
     @CheckReturnValue
     @SchedulerSupport(SchedulerSupport.NONE)
-    public final <R> Maybe<R> flatMapMaybe(
-            @NonNull final Function<? super T, ? extends MaybeSource<? extends R>> mapper) {
+    public final <R> Maybe<R> flatMapMaybe(@NonNull final Function<? super T, ? extends MaybeSource<? extends R>> mapper) {
         ObjectHelper.requireNonNull(mapper, "mapper is null");
         return RxJavaPlugins.onAssembly(new SingleFlatMapMaybe<T, R>(this, mapper));
     }
@@ -2187,8 +2170,7 @@ public abstract class Single<T> implements SingleSource<T> {
     @BackpressureSupport(BackpressureKind.FULL)
     @CheckReturnValue
     @SchedulerSupport(SchedulerSupport.NONE)
-    public final <R> Flowable<R> flatMapPublisher(
-            @NonNull Function<? super T, ? extends Publisher<? extends R>> mapper) {
+    public final <R> Flowable<R> flatMapPublisher(@NonNull Function<? super T, ? extends Publisher<? extends R>> mapper) {
         return toFlowable().flatMap(mapper);
     }
 
@@ -2215,8 +2197,7 @@ public abstract class Single<T> implements SingleSource<T> {
     @BackpressureSupport(BackpressureKind.FULL)
     @CheckReturnValue
     @SchedulerSupport(SchedulerSupport.NONE)
-    public final <U> Flowable<U> flattenAsFlowable(
-            @NonNull final Function<? super T, ? extends Iterable<? extends U>> mapper) {
+    public final <U> Flowable<U> flattenAsFlowable(@NonNull final Function<? super T, ? extends Iterable<? extends U>> mapper) {
         ObjectHelper.requireNonNull(mapper, "mapper is null");
         return RxJavaPlugins.onAssembly(new SingleFlatMapIterableFlowable<T, U>(this, mapper));
     }
@@ -2240,8 +2221,7 @@ public abstract class Single<T> implements SingleSource<T> {
      */
     @CheckReturnValue
     @SchedulerSupport(SchedulerSupport.NONE)
-    public final <U> Observable<U> flattenAsObservable(
-            @NonNull final Function<? super T, ? extends Iterable<? extends U>> mapper) {
+    public final <U> Observable<U> flattenAsObservable(@NonNull final Function<? super T, ? extends Iterable<? extends U>> mapper) {
         ObjectHelper.requireNonNull(mapper, "mapper is null");
         return RxJavaPlugins.onAssembly(new SingleFlatMapIterableObservable<T, U>(this, mapper));
     }
@@ -2264,8 +2244,7 @@ public abstract class Single<T> implements SingleSource<T> {
      */
     @CheckReturnValue
     @SchedulerSupport(SchedulerSupport.NONE)
-    public final <R> Observable<R> flatMapObservable(
-            @NonNull Function<? super T, ? extends ObservableSource<? extends R>> mapper) {
+    public final <R> Observable<R> flatMapObservable(@NonNull Function<? super T, ? extends ObservableSource<? extends R>> mapper) {
         return toObservable().flatMap(mapper);
     }
 
@@ -2288,8 +2267,7 @@ public abstract class Single<T> implements SingleSource<T> {
      */
     @CheckReturnValue
     @SchedulerSupport(SchedulerSupport.NONE)
-    public final Completable flatMapCompletable(
-            @NonNull final Function<? super T, ? extends CompletableSource> mapper) {
+    public final Completable flatMapCompletable(@NonNull final Function<? super T, ? extends CompletableSource> mapper) {
         ObjectHelper.requireNonNull(mapper, "mapper is null");
         return RxJavaPlugins.onAssembly(new SingleFlatMapCompletable<T>(this, mapper));
     }
@@ -2336,8 +2314,7 @@ public abstract class Single<T> implements SingleSource<T> {
      */
     @CheckReturnValue
     @SchedulerSupport(SchedulerSupport.NONE)
-    public final <R> Single<R> lift(
-            @NonNull final SingleOperator<? extends R, ? super T> lift) {
+    public final <R> Single<R> lift(@NonNull final SingleOperator<? extends R, ? super T> lift) {
         ObjectHelper.requireNonNull(lift, "onLift is null");
         return RxJavaPlugins.onAssembly(new SingleLift<T, R>(this, lift));
     }
@@ -2360,8 +2337,7 @@ public abstract class Single<T> implements SingleSource<T> {
      */
     @CheckReturnValue
     @SchedulerSupport(SchedulerSupport.NONE)
-    public final <R> Single<R> map(
-            @NonNull Function<? super T, ? extends R> mapper) {
+    public final <R> Single<R> map(@NonNull Function<? super T, ? extends R> mapper) {
         ObjectHelper.requireNonNull(mapper, "mapper is null");
         return RxJavaPlugins.onAssembly(new SingleMap<T, R>(this, mapper));
     }
@@ -2726,8 +2702,7 @@ public abstract class Single<T> implements SingleSource<T> {
      */
     @CheckReturnValue
     @SchedulerSupport(SchedulerSupport.NONE)
-    public final Single<T> retry(
-            @NonNull BiPredicate<? super Integer, ? super Throwable> predicate) {
+    public final Single<T> retry(@NonNull BiPredicate<? super Integer, ? super Throwable> predicate) {
         return toSingle(toFlowable().retry(predicate));
     }
 
@@ -2747,8 +2722,7 @@ public abstract class Single<T> implements SingleSource<T> {
     @Experimental
     @CheckReturnValue
     @SchedulerSupport(SchedulerSupport.NONE)
-    public final Single<T> retry(long times,
-                                 @NonNull Predicate<? super Throwable> predicate) {
+    public final Single<T> retry(long times, @NonNull Predicate<? super Throwable> predicate) {
         return toSingle(toFlowable().retry(times, predicate));
     }
 
@@ -2945,8 +2919,7 @@ public abstract class Single<T> implements SingleSource<T> {
      * Override this method in subclasses to handle the incoming SingleObservers.
      * @param observer the SingleObserver to handle, not null
      */
-    protected abstract void subscribeActual(
-            @NonNull SingleObserver<? super T> observer);
+    protected abstract void subscribeActual(@NonNull SingleObserver<? super T> observer);
 
     /**
      * Subscribes a given SingleObserver (subclass) to this Single and returns the given
@@ -2974,8 +2947,7 @@ public abstract class Single<T> implements SingleSource<T> {
      */
     @CheckReturnValue
     @SchedulerSupport(SchedulerSupport.NONE)
-    public final <E extends SingleObserver<? super T>> E subscribeWith(
-            @NonNull E observer) {
+    public final <E extends SingleObserver<? super T>> E subscribeWith(@NonNull E observer) {
         subscribe(observer);
         return observer;
     }
@@ -3000,8 +2972,7 @@ public abstract class Single<T> implements SingleSource<T> {
     @SchedulerSupport(SchedulerSupport.CUSTOM)
     public final Single<T> subscribeOn(@NonNull final Scheduler scheduler) {
         ObjectHelper.requireNonNull(scheduler, "scheduler is null");
-        return RxJavaPlugins.onAssembly(new SingleSubscribeOn<T>(this,
-                scheduler));
+        return RxJavaPlugins.onAssembly(new SingleSubscribeOn<T>(this, scheduler));
     }
 
     /**
@@ -3165,8 +3136,7 @@ public abstract class Single<T> implements SingleSource<T> {
      */
     @CheckReturnValue
     @SchedulerSupport(SchedulerSupport.COMPUTATION)
-    public final Single<T> timeout(long timeout, @NonNull TimeUnit unit,
-                                   @NonNull SingleSource<? extends T> other) {
+    public final Single<T> timeout(long timeout, @NonNull TimeUnit unit, @NonNull SingleSource<? extends T> other) {
         ObjectHelper.requireNonNull(other, "other is null");
         return timeout0(timeout, unit, Schedulers.computation(), other);
     }
@@ -3176,8 +3146,7 @@ public abstract class Single<T> implements SingleSource<T> {
                                @NonNull final SingleSource<? extends T> other) {
         ObjectHelper.requireNonNull(unit, "unit is null");
         ObjectHelper.requireNonNull(scheduler, "scheduler is null");
-        return RxJavaPlugins.onAssembly(new SingleTimeout<T>(this, timeout,
-                unit, scheduler, other));
+        return RxJavaPlugins.onAssembly(new SingleTimeout<T>(this, timeout, unit, scheduler, other));
     }
 
     /**
@@ -3307,7 +3276,7 @@ public abstract class Single<T> implements SingleSource<T> {
     @SuppressWarnings("unchecked")
     public final Observable<T> toObservable() {
         if (this instanceof FuseToObservable) {
-            return ((FuseToObservable<T>) this).fuseToObservable();
+            return ((FuseToObservable<T>)this).fuseToObservable();
         }
         return RxJavaPlugins.onAssembly(new SingleToObservable<T>(this));
     }
@@ -3408,7 +3377,6 @@ public abstract class Single<T> implements SingleSource<T> {
     }
 
     private static <T> Single<T> toSingle(@NonNull Flowable<T> source) {
-        return RxJavaPlugins.onAssembly(new FlowableSingleSingle<T>(source,
-                null));
+        return RxJavaPlugins.onAssembly(new FlowableSingleSingle<T>(source, null));
     }
 }
